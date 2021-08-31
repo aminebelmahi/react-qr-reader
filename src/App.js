@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import QrReader from "react-qr-reader";
 
 function App() {
+  const [scanResult, setScanResult] = useState();
+  const [scanError, setScanError] = useState();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ width: 300 }}>
+      <QrReader
+        showViewFinder
+        delay={100}
+        resolution={500}
+        onError={(err) => setScanError(...err, err)}
+        onScan={(data) => (data ? setScanResult(data) : null)}
+      />
+      {scanResult && <h1>{scanResult}</h1>}
+      {scanError && <h2>{scanResult}</h2>}
     </div>
   );
 }
